@@ -1,0 +1,52 @@
+# Android
+*.apk
+*.ap_
+*.aab
+
+# Gradle
+.gradle/
+build/
+app/build/
+
+# ¡IMPORTANTE! No subir archivos de keystore
+buscaminas_key
+*.jks
+*.keystore
+*.properties
+
+# Android Studio
+.idea/
+*.iml
+.local.properties
+.DS_Store
+
+# Archivos de configuración local
+local.properties
+gradle.properties
+
+# Archivos temporales
+*.log
+*.tmp
+.cxx/
+.externalNativeBuild/
+
+# Capturas de pantalla
+/captures
+
+# Archivos de módulos
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+
+# Archivos de sistema
+Thumbs.db
+
+# Archivos de log
+*.log
+
+# Archivos de backup
+*~
+*.bak
