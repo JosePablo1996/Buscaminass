@@ -24,17 +24,44 @@ jobs:
           sudo unzip -q -d /opt/gradle gradle-8.13-bin.zip
           echo "/opt/gradle/gradle-8.13/bin" >> $GITHUB_PATH
 
-      - name: Verify project structure
+      - name: Create AndroidX configuration FORCEFULLY
         run: |
-          echo "=== Project Files ==="
-          ls -la
-          echo "=== gradle.properties ==="
-          cat gradle.properties || echo "gradle.properties not found"
-          echo "=== app/build.gradle.kts ==="
-          cat app/build.gradle.kts | grep -A 5 -B 5 "buildFeatures" || echo "No buildFeatures found"
+          # Crear gradle.properties en múltiples ubicaciones para asegurar
+          echo "=== Creating gradle.properties with AndroidX ==="
+          
+          # 1. En la raíz del proyecto (principal)
+          cat > gradle.properties << 'EOF'
+          android.useAndroidX=true
+          android.enableJetifier=true
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          android.defaults.buildfeatures.buildconfig=true
+          android.defaults.buildfeatures.renderscript=true
+          android.defaults.buildfeatures.resvalues=true
+          android.defaults.buildfeatures.shaders=true
+          EOF
+          
+          # 2. También en carpeta gradle/
+          mkdir -p gradle
+          cp gradle.properties gradle/
+          
+          # 3. Y en el home del usuario para Gradle
+          mkdir -p ~/.gradle
+          cp gradle.properties ~/.gradle/
+          
+          echo "=== Verifying files ==="
+          echo "Project root:"
+          ls -la gradle.properties
+          echo "Gradle folder:"
+          ls -la gradle/gradle.properties
+          echo "Home folder:"
+          ls -la ~/.gradle/gradle.properties
+          
+          echo "=== Content ==="
+          cat gradle.properties
 
-      - name: Build with verification
+      - name: Build with forced AndroidX
         run: |
+          echo "=== Building with AndroidX enabled ==="
           gradle clean assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
