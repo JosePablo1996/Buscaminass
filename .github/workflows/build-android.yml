@@ -24,30 +24,34 @@ jobs:
           sudo unzip -q -d /opt/gradle gradle-8.13-bin.zip
           echo "/opt/gradle/gradle-8.13/bin" >> $GITHUB_PATH
 
-      - name: Create gradle.properties if missing
+      - name: Force AndroidX configuration
         run: |
-          if [ ! -f gradle.properties ]; then
-            echo "Creating gradle.properties with AndroidX settings"
-            echo "android.useAndroidX=true" >> gradle.properties
-            echo "android.enableJetifier=true" >> gradle.properties
-            echo "org.gradle.jvmargs=-Xmx2048m" >> gradle.properties
-          else
-            echo "gradle.properties already exists, updating AndroidX settings"
-            # Asegurar que las propiedades de AndroidX estén presentes
-            if ! grep -q "android.useAndroidX" gradle.properties; then
-              echo "android.useAndroidX=true" >> gradle.properties
-            fi
-            if ! grep -q "android.enableJetifier" gradle.properties; then
-              echo "android.enableJetifier=true" >> gradle.properties
-            fi
-          fi
+          # Crear gradle.properties con AndroidX forzado
+          cat > gradle.properties << EOF
+          # AndroidX Configuration
+          android.useAndroidX=true
+          android.enableJetifier=true
+          
+          # Gradle Configuration
+          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+          org.gradle.parallel=true
+          org.gradle.daemon=false
+          
+          # Kotlin Configuration
+          kotlin.code.style=official
+          EOF
+          
+          echo "=== gradle.properties content ==="
+          cat gradle.properties
 
-      - name: Build with AndroidX enabled
+      - name: Build with forced AndroidX
         run: |
+          echo "=== Building with AndroidX enabled ==="
           gradle --version
-          gradle clean assembleDebug --no-daemon
+          gradle clean assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: buscaminas-apk
