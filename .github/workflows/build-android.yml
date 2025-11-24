@@ -18,20 +18,17 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Validate Gradle Wrapper
+      - name: Install Gradle 8.13 manually
         run: |
-          echo "=== Validating Gradle Wrapper ==="
-          cat gradle/wrapper/gradle-wrapper.properties
-          echo "=== File exists? ==="
-          ls -la gradle/wrapper/gradle-wrapper.properties
+          # Instalar Gradle 8.13 manualmente mientras arreglamos el wrapper
+          wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
+          sudo unzip -d /opt/gradle gradle-8.13-bin.zip
+          echo "/opt/gradle/gradle-8.13/bin" >> $GITHUB_PATH
 
-      - name: Build with Gradle Wrapper
+      - name: Build with manual Gradle
         run: |
-          chmod +x ./gradlew
-          echo "=== Using Gradle Wrapper ==="
-          ./gradlew --version
-          echo "=== Building APK ==="
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          gradle --version
+          gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
