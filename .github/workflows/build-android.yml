@@ -23,6 +23,13 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Create Keystore from Secrets
+        if: github.event_name == 'release'
+        run: |
+          echo "🔐 Creating keystore from GitHub Secrets..."
+          echo "${{ secrets.RELEASE_KEYSTORE }}" | base64 -d > buscaminas.jks
+          echo "✅ Keystore created! File size: $(stat -c%s buscaminas.jks) bytes"
+
       - name: Build Debug APK
         run: |
           ./gradlew clean assembleDebug --no-daemon
@@ -32,13 +39,6 @@ jobs:
         with:
           name: buscaminas-debug-apk
           path: app/build/outputs/apk/debug/
-
-      - name: Create Keystore from Secrets
-        if: github.event_name == 'release'
-        run: |
-          echo "🔐 Creating keystore from GitHub Secrets..."
-          echo "${{ secrets.RELEASE_KEYSTORE }}" | base64 -d > buscaminas.jks
-          echo "✅ Keystore created successfully!"
 
       - name: Build Signed Release APK
         if: github.event_name == 'release'
