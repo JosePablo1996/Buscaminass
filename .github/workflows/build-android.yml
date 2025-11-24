@@ -6,7 +6,6 @@ on:
   release:
     types: [created]
 
-# ⬇️ AGREGAR ESTA SECCIÓN DE PERMISOS
 permissions:
   contents: write
   packages: write
@@ -16,7 +15,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    # ⬇️ O PUEDES AGREGAR LOS PERMISOS A NIVEL DEL JOB
     permissions:
       contents: write
       packages: write
@@ -59,12 +57,12 @@ jobs:
         run: |
           echo "🚀 Building Signed Release APK..."
           echo "📁 Using keystore at: $(pwd)/buscaminas.jks"
-          ./gradlew clean assembleRelease --no-daemon \
-            -Pkeystore.file="$(pwd)/buscaminas.jks" \
-            -Pkeystore.password='${{ secrets.RELEASE_PASSWORD }}' \
-            -Pkey.alias='${{ secrets.RELEASE_ALIAS }}' \
-            -Pkey.password='${{ secrets.RELEASE_KEY_PASSWORD }}'
-          echo "✅ Signed Release APK built successfully!"
+          ./gradlew clean assembleRelease --no-daemon
+        env:
+          RELEASE_PASSWORD: '${{ secrets.RELEASE_PASSWORD }}'
+          RELEASE_ALIAS: '${{ secrets.RELEASE_ALIAS }}'
+          RELEASE_KEY_PASSWORD: '${{ secrets.RELEASE_KEY_PASSWORD }}'
+          GITHUB_ACTIONS: 'true'
 
       - name: Verify APK exists
         if: github.event_name == 'release'
