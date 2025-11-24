@@ -20,15 +20,18 @@ jobs:
 
       - name: Validate Gradle Wrapper
         run: |
-          echo "=== Checking Gradle Wrapper ==="
+          echo "=== Validating Gradle Wrapper ==="
           cat gradle/wrapper/gradle-wrapper.properties
-          ls -la gradle/wrapper/
+          echo "=== File exists? ==="
+          ls -la gradle/wrapper/gradle-wrapper.properties
 
-      - name: Build with correct Gradle version
+      - name: Build with Gradle Wrapper
         run: |
           chmod +x ./gradlew
+          echo "=== Using Gradle Wrapper ==="
           ./gradlew --version
-          ./gradlew assembleDebug --no-daemon
+          echo "=== Building APK ==="
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
