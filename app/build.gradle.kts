@@ -17,6 +17,16 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // 🔐 CONFIGURACIÓN DE FIRMA PARA RELEASE - AGREGAR ESTO
+    signingConfigs {
+        create("release") {
+            storeFile = file(project.findProperty("keystore.file") ?: "debug.keystore")
+            storePassword = project.findProperty("keystore.password") as? String ?: ""
+            keyAlias = project.findProperty("key.alias") as? String ?: ""
+            keyPassword = project.findProperty("key.password") as? String ?: ""
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -24,6 +34,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // 🔐 APLICAR FIRMA AL RELEASE
+            signingConfig = signingConfigs.getByName("release")
+        }
+
+        debug {
+            isMinifyEnabled = false
         }
     }
 
