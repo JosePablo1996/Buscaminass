@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#E3F2FD"
+    android:padding="1dp">
+
+    <!-- CABECERA OPTIMIZADA -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#1E88E5"
+        android:gravity="center"
+        android:padding="8dp"
+        android:elevation="8dp">
+
+        <!-- Título centrado -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buscaminas"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:maxLines="1" />
+
+        <!-- Botón de reinicio -->
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/glass_button"
+            android:text="😊"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
+
+        <!-- CONTENEDOR DE CONTADORES MEJORADO -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:weightSum="2">
+
+            <!-- Contador de Minas -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MINAS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/minesCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="70dp"
+                    android:minHeight="32dp"
+                    android:gravity="center"
+                    android:text="010"
+                    android:textColor="#FF5252"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="#0D47A1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp" />
+
+            </LinearLayout>
+
+            <!-- Contador de Tiempo -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TIEMPO"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/timerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="70dp"
+                    android:minHeight="32dp"
+                    android:gravity="center"
+                    android:text="000"
+                    android:textColor="#FF5252"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="#0D47A1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- TABLERO 8x8 OPTIMIZADO -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="8dp"
+        android:background="@drawable/glass_background">
+
+        <!-- Marco del tablero -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/glass_panel"
+            android:padding="6dp"
+            android:elevation="16dp"
+            android:gravity="center">
+
+            <!-- GridView 8x8 adaptable -->
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numColumns="8"
+                android:verticalSpacing="2dp"
+                android:horizontalSpacing="2dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center"
+                android:background="@drawable/glass_cell_background" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- FOOTER OPTIMIZADO -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#1E88E5"
+        android:gravity="center"
+        android:padding="8dp"
+        android:elevation="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desarrollado con ❤️ por Jose Pablo Miranda Quintanilla"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:maxLines="2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="v1.0"
+            android:textColor="#BBDEFB"
+            android:textSize="8sp"
+            android:layout_marginTop="2dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

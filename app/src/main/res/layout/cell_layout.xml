@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cellButton"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:minWidth="36dp"
+    android:minHeight="36dp"
+    android:background="@drawable/glass_cell_selector"
+    android:textSize="14sp"
+    android:textStyle="bold"
+    android:gravity="center"
+    android:textColor="#1A237E"
+    android:padding="2dp" />

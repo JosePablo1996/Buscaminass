@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Celda presionada -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#80E3F2FD" />
+            <stroke android:width="1dp" android:color="#B31E88E5" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+
+    <!-- Celda normal -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#A6FFFFFF" />
+            <stroke android:width="1dp" android:color="#80FFFFFF" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</selector>

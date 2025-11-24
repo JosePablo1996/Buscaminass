@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Buscaminas</string>
+    <string name="game_title">Buscaminas</string>
+    <string name="developer_info">Desarrollado con ❤️ por Jose Pablo Miranda Quintanilla</string>
+    <string name="mines_label">MINAS</string>
+    <string name="time_label">TIEMPO</string>
+</resources>
