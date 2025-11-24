@@ -18,40 +18,26 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Install Gradle 8.13 manually
+      - name: Install Gradle 8.13
         run: |
           wget -q https://services.gradle.org/distributions/gradle-8.13-bin.zip
           sudo unzip -q -d /opt/gradle gradle-8.13-bin.zip
           echo "/opt/gradle/gradle-8.13/bin" >> $GITHUB_PATH
 
-      - name: Force AndroidX configuration
+      - name: Verify project structure
         run: |
-          # Crear gradle.properties con AndroidX forzado
-          cat > gradle.properties << EOF
-          # AndroidX Configuration
-          android.useAndroidX=true
-          android.enableJetifier=true
-          
-          # Gradle Configuration
-          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
-          org.gradle.parallel=true
-          org.gradle.daemon=false
-          
-          # Kotlin Configuration
-          kotlin.code.style=official
-          EOF
-          
-          echo "=== gradle.properties content ==="
-          cat gradle.properties
+          echo "=== Project Files ==="
+          ls -la
+          echo "=== gradle.properties ==="
+          cat gradle.properties || echo "gradle.properties not found"
+          echo "=== app/build.gradle.kts ==="
+          cat app/build.gradle.kts | grep -A 5 -B 5 "buildFeatures" || echo "No buildFeatures found"
 
-      - name: Build with forced AndroidX
+      - name: Build with verification
         run: |
-          echo "=== Building with AndroidX enabled ==="
-          gradle --version
           gradle clean assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
-        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: buscaminas-apk

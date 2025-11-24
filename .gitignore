@@ -12,7 +12,6 @@ app/build/
 buscaminas_key
 *.jks
 *.keystore
-*.properties
 
 # Android Studio
 .idea/
@@ -20,9 +19,9 @@ buscaminas_key
 .local.properties
 .DS_Store
 
-# Archivos de configuración local
+# Archivos de configuración local - SOLO excluir local.properties
 local.properties
-gradle.properties
+# gradle.properties DEBE subirse para que funcione AndroidX
 
 # Archivos temporales
 *.log
@@ -43,9 +42,6 @@ gradle.properties
 
 # Archivos de sistema
 Thumbs.db
-
-# Archivos de log
-*.log
 
 # Archivos de backup
 *~
