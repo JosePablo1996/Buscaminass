@@ -33,14 +33,13 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Create Keystore from Secrets
-        if: github.event_name == 'release'
         run: |
           echo "🔐 Creating keystore from GitHub Secrets..."
-          echo "${{ secrets.RELEASE_KEYSTORE }}" | base64 -d > buscaminas.jks
-          echo "✅ Keystore created! File size: $(stat -c%s buscaminas.jks) bytes"
+          echo "${{ secrets.RELEASE_KEYSTORE }}" | base64 -d > buscaminas_key.jks
+          echo "✅ Keystore created! File size: $(stat -c%s buscaminas_key.jks) bytes"
           echo "📁 Current directory: $(pwd)"
-          echo "📁 Keystore location: $(pwd)/buscaminas.jks"
-          ls -la buscaminas.jks
+          echo "📁 Keystore location: $(pwd)/buscaminas_key.jks"
+          ls -la buscaminas_key.jks
 
       - name: Build Debug APK
         run: |
@@ -56,13 +55,12 @@ jobs:
         if: github.event_name == 'release'
         run: |
           echo "🚀 Building Signed Release APK..."
-          echo "📁 Using keystore at: $(pwd)/buscaminas.jks"
+          echo "📁 Using keystore at: $(pwd)/buscaminas_key.jks"
           ./gradlew clean assembleRelease --no-daemon
         env:
           RELEASE_PASSWORD: '${{ secrets.RELEASE_PASSWORD }}'
           RELEASE_ALIAS: '${{ secrets.RELEASE_ALIAS }}'
           RELEASE_KEY_PASSWORD: '${{ secrets.RELEASE_KEY_PASSWORD }}'
-          GITHUB_ACTIONS: 'true'
 
       - name: Verify APK exists
         if: github.event_name == 'release'
