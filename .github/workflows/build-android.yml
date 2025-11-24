@@ -20,15 +20,32 @@ jobs:
 
       - name: Install Gradle 8.13 manually
         run: |
-          # Instalar Gradle 8.13 manualmente mientras arreglamos el wrapper
-          wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
-          sudo unzip -d /opt/gradle gradle-8.13-bin.zip
+          wget -q https://services.gradle.org/distributions/gradle-8.13-bin.zip
+          sudo unzip -q -d /opt/gradle gradle-8.13-bin.zip
           echo "/opt/gradle/gradle-8.13/bin" >> $GITHUB_PATH
 
-      - name: Build with manual Gradle
+      - name: Create gradle.properties if missing
+        run: |
+          if [ ! -f gradle.properties ]; then
+            echo "Creating gradle.properties with AndroidX settings"
+            echo "android.useAndroidX=true" >> gradle.properties
+            echo "android.enableJetifier=true" >> gradle.properties
+            echo "org.gradle.jvmargs=-Xmx2048m" >> gradle.properties
+          else
+            echo "gradle.properties already exists, updating AndroidX settings"
+            # Asegurar que las propiedades de AndroidX estén presentes
+            if ! grep -q "android.useAndroidX" gradle.properties; then
+              echo "android.useAndroidX=true" >> gradle.properties
+            fi
+            if ! grep -q "android.enableJetifier" gradle.properties; then
+              echo "android.enableJetifier=true" >> gradle.properties
+            fi
+          fi
+
+      - name: Build with AndroidX enabled
         run: |
           gradle --version
-          gradle assembleDebug --no-daemon
+          gradle clean assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
