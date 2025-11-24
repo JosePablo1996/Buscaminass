@@ -6,9 +6,20 @@ on:
   release:
     types: [created]
 
+# ⬇️ AGREGAR ESTA SECCIÓN DE PERMISOS
+permissions:
+  contents: write
+  packages: write
+  actions: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    # ⬇️ O PUEDES AGREGAR LOS PERMISOS A NIVEL DEL JOB
+    permissions:
+      contents: write
+      packages: write
 
     steps:
       - name: Checkout code
