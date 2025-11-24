@@ -55,13 +55,18 @@ jobs:
             -Pkey.password='${{ secrets.RELEASE_KEY_PASSWORD }}'
           echo "✅ Signed Release APK built successfully!"
 
+      - name: Verify APK exists
+        if: github.event_name == 'release'
+        run: |
+          echo "📁 Verifying APK file..."
+          ls -la app/build/outputs/apk/release/
+          echo "✅ APK file verified!"
+
       - name: Upload Signed Release APK
         if: github.event_name == 'release'
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
+        with:
+          files: app/build/outputs/apk/release/app-release.apk
+          tag_name: ${{ github.event.release.tag_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: app/build/outputs/apk/release/app-release.apk
-          asset_name: Buscaminas-${{ github.event.release.tag_name }}.apk
-          asset_content_type: application/vnd.android.package-archive
